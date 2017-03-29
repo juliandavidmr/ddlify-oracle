@@ -1,0 +1,14 @@
+{
+    "files": [
+        "src/main.ts",
+        "src/hex.ts",
+        "src/connect.ts"
+    ],
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "module": "commonjs"
+    },
+    "include": [
+        "./src/**/*"
+    ]
+}
