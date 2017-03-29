@@ -1,5 +1,18 @@
 # Ddlify: Oracle database bindings for Node.js #
 
+## Features
+
+- [x] Promises
+- [x] All version information
+- [x] Connect
+- [ ] DDL
+- [ ] Describe procedures
+- [ ] Describe tables
+- [ ] Describe views
+- [ ] Describe secuences
+- [ ] Describe triggers
+- [ ] Describe procedures
+
 ## INSTALL
 
 ### OCI libraries ###
@@ -68,7 +81,63 @@ $ export LD_LIBRARY_PATH=/opt/instantclient
 $ sudo apt-get install libaio1
 ```
 
-## Colaborate
+--------
+
+## Installation 
+```sh
+# Not available yet
+$ npm install --save ddlify
+```
+
+## API
+
+### Connect database
+Connect to a local or remote database.
+
+```js
+var ddlify = require('ddlify');
+
+
+var dbConfig = {
+    user: process.env.NODE_ORACLEDB_USER || "hr",
+
+    // Instead of hard coding the password, consider prompting for it,
+    // passing it in an environment variable via process.env, or using
+    // External Authentication.
+    password: process.env.NODE_ORACLEDB_PASSWORD || "welcome",
+
+    // For information on connection strings see:
+    // https://github.com/oracle/node-oracledb/blob/master/doc/api.md#connectionstrings
+    connectString: process.env.NODE_ORACLEDB_CONNECTIONSTRING || "localhost/orcl",
+
+    // Setting externalAuth is optional.  It defaults to false.  See:
+    // https://github.com/oracle/node-oracledb/blob/master/doc/api.md#extauth
+    externalAuth: process.env.NODE_ORACLEDB_EXTERNALAUTH ? true : false
+};
+
+ddlify.getConnection(dbConfig).then(connection => {
+    console.log("Connection:\n", connection)
+});
+```
+### Get oracle information
+```js
+ddlify.info(dbConfig).then(info => {
+    console.log("Info:\n", info);
+    /*=>
+    Info:
+    [[ 'Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production', 0],
+    [ 'PL/SQL Release 12.1.0.2.0 - Production', 0 ],
+    [ 'CORE\t12.1.0.2.0\tProduction', 0 ],
+    [ 'TNS for 64-bit Windows: Version 12.1.0.2.0 - Production', 0 ],
+    [ 'NLSRTL Version 12.1.0.2.0 - Production', 0 ] ]
+    */
+}).catch(err => {
+    console.log("ERROR:\n", err)
+});
+```
+
+
+## COLABORATE
 
 Install packages:
 ```bash

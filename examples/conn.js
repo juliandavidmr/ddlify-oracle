@@ -1,7 +1,6 @@
 var ddlify = require('../');
 
 require('dotenv').config()
-console.log("__>", process.env.NODE_ORACLEDB_USER)
 
 var dbConfig = {
     user: process.env.NODE_ORACLEDB_USER || "hr",
@@ -20,4 +19,6 @@ var dbConfig = {
     externalAuth: process.env.NODE_ORACLEDB_EXTERNALAUTH ? true : false
 };
 
-ddlify.connect(dbConfig);
+ddlify.getConnection(dbConfig).then(connection => {
+    console.log("Connection:\n", connection)
+});
