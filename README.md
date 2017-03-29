@@ -124,12 +124,12 @@ ddlify.getConnection(dbConfig).then(connection => {
 ddlify.info(dbConfig).then(info => {
     console.log("Info:\n", info);
     /*=>
-    Info:
-    [[ 'Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production', 0],
-    [ 'PL/SQL Release 12.1.0.2.0 - Production', 0 ],
-    [ 'CORE\t12.1.0.2.0\tProduction', 0 ],
-    [ 'TNS for 64-bit Windows: Version 12.1.0.2.0 - Production', 0 ],
-    [ 'NLSRTL Version 12.1.0.2.0 - Production', 0 ] ]
+Info:
+ [ 'Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production',
+  'PL/SQL Release 12.1.0.2.0 - Production',
+  'CORE\t12.1.0.2.0\tProduction',
+  'TNS for 64-bit Windows: Version 12.1.0.2.0 - Production',
+  'NLSRTL Version 12.1.0.2.0 - Production' ]
     */
 }).catch(err => {
     console.log("ERROR:\n", err)

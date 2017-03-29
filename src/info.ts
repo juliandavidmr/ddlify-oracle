@@ -1,29 +1,26 @@
 import { IConnectionParams, IConnection } from './models/connection.model';
+import { toObject, existValue } from './utils/Array';
 import * as Connect from './connect';
 import * as oracledb from 'oracledb';
+import * as isNumber from 'is-number';
 
 declare var Promise: any;
 
-function getInfo(connection: IConnection):Promise<any> {
+function getInfo(connection: IConnection): Promise<any> {
   return new Promise((resolve, reject) => {
     connection.execute(
       "SELECT * FROM v$version", [],
       {
-        fetchInfo:
-        {
-          "HIRE_DATE": { type: oracledb.STRING },  // return the date as a string
-          "COMMISSION_PCT": { type: oracledb.DEFAULT }  // override oracledb.fetchAsString
-        }
+        outFormat: oracledb.OBJECT,
+        extendedMetaData: true
       },
       function (err, result) {
         if (err) {
           //console.error(err.message);
-          //doRelease(connection);
           return reject(err);
         }
         //console.log(result.rows);
-        return resolve(result.rows);
-        //doRelease(connection);
+        return resolve(beautifyInfo(toObject(result.rows)));
       });
   });
 }
@@ -33,10 +30,30 @@ function getInfo(connection: IConnection):Promise<any> {
  * 
  * @param table  name table
  */
-export function info(dbConfigs: IConnectionParams):Promise<any> {
-  return new Promise((resolve, reject) => {    
+export function info(dbConfigs: IConnectionParams): Promise<any> {
+  return new Promise((resolve, reject) => {
     Connect.getConnection(dbConfigs).then(connection => {
       getInfo(connection).then(info => resolve(info)).catch(err => reject(err))
     })
   });
+}
+
+function beautifyInfo(infoObject: Object): any {
+  var obj = [];
+  for (var key in infoObject) {
+    if (infoObject.hasOwnProperty(key)) {
+      var element = infoObject[key];
+      if (isNumber(key)) {
+        for (var key2 in element) {
+          if (element.hasOwnProperty(key2)) {
+            var element2 = element[key2];
+            if (!existValue(obj, element["BANNER"])) {
+              obj.push(element["BANNER"])
+            }
+          }
+        }
+      }
+    }
+  }
+  return obj;
 }
