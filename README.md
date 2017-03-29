@@ -7,83 +7,16 @@
 - [x] Connect
 - [ ] DDL
 - [ ] Describe procedures
-- [ ] Describe tables
+- [x] Describe tables
 - [ ] Describe views
 - [ ] Describe secuences
 - [ ] Describe triggers
 - [ ] Describe procedures
 
-## INSTALL
+## Installation
 
-### OCI libraries ###
+**[IMPORTANT] First step, it is important to follow the installation guide before continuing. [Installation guide](./docs/INSTALLATION.md)**
 
-Before proceeding with installation, you need to have the 
-[OCI instant client] [oci] [libraries] [oci-lib] and [include files] [oci-inc].
-For example, you download the `instantclient-basic-linux.x64-11.2.0.3.0.zip` 
-library file, and the `instantclient-sdk-linux.x64-11.2.0.3.0.zip` SDK file, and save them in your `$HOME/Downloads` directory. You would then uncompress both files, and move the generated directory to your `/opt` path:
-
-```bash
-$ cd $HOME/Downloads
-$ unzip instantclient-basic-linux.x64-11.2.0.3.0.zip
-$ unzip instantclient-sdk-linux.x64-11.2.0.3.0.zip 
-$ sudo mv instantclient_11_2/ /opt/instantclient
-```
-
-After uncompressing you will probably need to create symbolink links:
-
-```bash
-$ cd /opt/instantclient
-$ sudo ln -s libocci.so.11.1 libocci.so
-$ sudo ln -s libclntsh.so.11.1 libclntsh.so
-```
-
-You will also need `libaio`. In **Arch Linux** this can easily be installed with:
-
-```bash
-$ sudo pacman -S libaio
-```
-
-On **Debian** based distros:
-
-```bash
-$ sudo apt-get install libaio
-```
-
-### Configuring OCI ###
-
-Once you have the library and include files installed, and in order for the 
-installation script to locate them properly, you'll need to set the 
-`OCI_INCLUDE_DIR` and `OCI_LIB_DIR` environment variables. For example:
-
-```bash
-$ export OCI_INCLUDE_DIR=/opt/instantclient/sdk/include/
-$ export OCI_LIB_DIR=/opt/instantclient
-```
-Or
-```bash
-$ export OCI_INC_DIR=/opt/instantclient/sdk/include/
-$ export OCI_LIB_DIR=/opt/instantclient
-```
-
-## Continue installation
-
-Once the environment variables are set, install with npm:
-
-```bash
-$ npm install db-oracle
-```
-
-You should also add the OCI library path to your `LD_LIBRARY_PATH` environment:
-
-```bash
-$ export LD_LIBRARY_PATH=/opt/instantclient
-
-$ sudo apt-get install libaio1
-```
-
---------
-
-## Installation 
 ```sh
 # Not available yet
 $ npm install --save ddlify
@@ -119,44 +52,42 @@ ddlify.getConnection(dbConfig).then(connection => {
     console.log("Connection:\n", connection)
 });
 ```
-### Get oracle information
+### Get oracle information ##
 ```js
 ddlify.info(dbConfig).then(info => {
     console.log("Info:\n", info);
     /*=>
-Info:
- [ 'Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production',
-  'PL/SQL Release 12.1.0.2.0 - Production',
-  'CORE\t12.1.0.2.0\tProduction',
-  'TNS for 64-bit Windows: Version 12.1.0.2.0 - Production',
-  'NLSRTL Version 12.1.0.2.0 - Production' ]
+    Info:
+    ['Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit   Production',
+     'PL/SQL Release 12.1.0.2.0 - Production',
+     'CORE 12.1.0.2.0 Production',
+     'TNS for 64-bit Windows: Version 12.1.0.2.0 - Production',
+     'NLSRTL Version 12.1.0.2.0 - Production' ]
     */
-}).catch(err => {
-    console.log("ERROR:\n", err)
+});
+```
+
+### Describe table
+```js
+var table = {
+  name: 'USUARIO',
+  owner: 'VISIBILIDAD'
+}
+
+ddlify.describe(table, dbConfig).then(info => {
+  console.log(info)
 });
 ```
 
 
-## COLABORATE
+## Contributing
 
-Install packages:
-```bash
-$ yarn add global gulp-cli
-$ yarn install
-```
-
-Run
-```bash
-$ [sudo] gulp
-$ node dist/main.js
-```
-
-
+Ddlify-oracle is an open source project. See [CONTRIBUTING](./docs/CONTRIBUTING.md) for details.
 
 
 ## LICENSE ##
 
-This module is released under the [MIT License] [license].
+This module is released under the [MIT License] [license]. [**@juliandavidmr**](https://github.com/juliandavidmr)
 
 [license]: http://www.opensource.org/licenses/mit-license.php
 [oci]: http://www.oracle.com/technetwork/database/features/oci/index.html
