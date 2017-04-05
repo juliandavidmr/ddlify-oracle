@@ -1,4 +1,4 @@
-import { IConnectionParams, IConnection } from './models/connection.model';
+import { IConnectionParams, IConnection } from './interfaces/connection.model';
 import { toObject, existValue } from './utils/Array';
 import * as Connect from './connect';
 import * as oracledb from 'oracledb';

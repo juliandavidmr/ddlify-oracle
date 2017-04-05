@@ -1,4 +1,4 @@
-import { IConnectionParams, IConnection } from './models/connection.model';
+import { IConnectionParams, IConnection } from './interfaces/connection.model';
 import { getConnection, closeConnection } from './connect';
 import { executeQuery } from './execute';
 import { hasArguments } from './utils/Arguments';

@@ -1,8 +1,12 @@
-import { IConnectionParams, IConnection } from './models/connection.model';
+import { IConnectionParams, IConnection } from './interfaces/connection.model';
 declare var Promise: any;
 
 import * as oracledb from 'oracledb';
 
+/**
+ * Get connection Oracle
+ * @param dbConfig 
+ */
 export function getConnection(dbConfig: IConnectionParams): Promise<IConnection> {
   return oracledb.getConnection(
     {
@@ -12,6 +16,10 @@ export function getConnection(dbConfig: IConnectionParams): Promise<IConnection>
     });
 }
 
+/**
+ * Close connection connection
+ * @param Connection 
+ */
 export function closeConnection(Connection: IConnection) {
   if (!('close' in Connection)) {
     throw new Error("Connection invalid");

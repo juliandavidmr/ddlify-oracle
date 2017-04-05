@@ -9,8 +9,8 @@ var dbConfig = {
   externalAuth: process.env.NODE_ORACLEDB_EXTERNALAUTH ? true : false
 };
 
-ddlify.info(dbConfig).then(info => {
-  console.log("Info:\n", info)
-}).catch(err => {
-  console.log("ERROR:\n", err)
+var Person = new ddlify.Model({
+  name: {
+    type: 'string'
+  }
 });

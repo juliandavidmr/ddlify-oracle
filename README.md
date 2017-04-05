@@ -12,6 +12,9 @@
 - [ ] Describe secuences
 - [ ] Describe triggers
 - [ ] Describe procedures
+- [ ] Create models
+- [ ] Create schemas
+- [ ] Listing models
 
 ## Installation
 
